@@ -1,0 +1,100 @@
+;; This project is written in Sibilant, a LISP that transpiles to
+;; javascript. We are using Sibilant because it's similar to our
+;; language of choice, Clojure, but easier to get started with. It
+;; also doesn't have an extensive ecosystem of native libraries, which
+;; means you'll have to work a little harder to do this task :). Sibilant 
+;; documentation and a tutorial can be found here: https://sibilant.org/
+
+;; Install Sibilant by running:
+
+;; npm install -g sibilant
+
+;; Then, copy this file to a local directory and run it to see an
+;; explanation of the project:
+ 
+;; sibilant -x -f project.sibilant 
+
+(console.log "Write a function that will take in a list of strings and")
+(console.log "print a list of each distinct string in the input list,")
+(console.log "along with the number of times the string occurs in the list.")
+(console.log "The strings should be ordered by most to least frequently occuring.")
+
+(var inputs1 ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c"])
+
+
+(def gen-input [length]
+  (var samples ["abc" "def" "ghi" "jkl" "mno" "pqr"])
+  (.from Array {length: length}
+               (#> (get samples (.floor Math (* (.random Math)
+	                                        (get samples 'length)))))))
+	       
+(var inputs2 (gen-input 100))
+(var inputs3 (gen-input 1000))
+
+
+;; Your solution goes here.
+
+(def print-word-freq (inputs)
+
+	(var freq {}) 
+
+
+	(each value inputs 
+		(if 
+			(has-key? freq value)
+			(set freq value (+ (get freq value) 1 ))
+			(set freq value 1))
+		)
+
+
+
+	(var sort{})
+
+
+	(var count 0)
+
+	(each-key key freq (incr count)	
+	)
+
+
+	(while (> count 0)
+		(var name)
+		(var max 0)
+		(each-key key freq
+			(if
+				(> (get freq key) max)
+				(do 
+				 ;;(console.log key)
+				 (assign name key)
+				 (assign max (get freq key)))
+
+			)		
+		)
+		(delete (get freq name))
+		(set sort name max)
+		(decr count)
+	)
+	sort
+  )
+
+(var output)
+
+(assign output print-word-freq(inputs1))
+(console.log output)
+
+(assign output print-word-freq(inputs2))
+(console.log output)
+
+(assign output print-word-freq(inputs3))
+(console.log output)
+
+
+
+;; Once you have a solution for the above inputs,
+;; test it against these inputs:
+
+
+
+;; Can you come up with more tests that exercise your code
+;; in ways that prove it is correct?
+
